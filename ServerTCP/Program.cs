@@ -20,14 +20,14 @@ namespace ServerTCP
             client = new TcpClient();
             try
             {
-                client.Connect(host, port); //подключение клиента
-                stream = client.GetStream(); // получаем поток
+                client.Connect(host, port); //підключення клієнтп
+                stream = client.GetStream(); // получаєм потік
 
                 string message = userName;
                 byte[] data = Encoding.Unicode.GetBytes(message);
                 stream.Write(data, 0, data.Length);
 
-                // запускаем новый поток для получения данных
+                // запускаєм новий потік для отримання даних
                 Thread receiveThread = new Thread(new ThreadStart(ReceiveMessage));
                 receiveThread.Start(); //старт потока
                 Console.WriteLine("Welcome, {0}", userName);
@@ -42,7 +42,7 @@ namespace ServerTCP
                 Disconnect();
             }
         }
-        // отправка сообщений
+        // відправка сповіщень
         static void SendMessage()
         {
             Console.WriteLine("Enter message: ");
@@ -54,14 +54,14 @@ namespace ServerTCP
                 stream.Write(data, 0, data.Length);
             }
         }
-        // получение сообщений
+        // отримання сповіщень
         static void ReceiveMessage()
         {
             while (true)
             {
                 try
                 {
-                    byte[] data = new byte[64]; // буфер для получаемых данных
+                    byte[] data = new byte[64]; // буфер для отримання даних
                     StringBuilder builder = new StringBuilder();
                     int bytes = 0;
                     do
@@ -72,11 +72,11 @@ namespace ServerTCP
                     while (stream.DataAvailable);
 
                     string message = builder.ToString();
-                    Console.WriteLine(message);//вывод сообщения
+                    Console.WriteLine(message);//вивід сповіщення
                 }
                 catch
                 {
-                    Console.WriteLine("Connection closed!"); //соединение было прервано
+                    Console.WriteLine("Connection closed!"); //з'єднання було пееррвано
                     Console.ReadLine();
                     Disconnect();
                 }
@@ -86,10 +86,10 @@ namespace ServerTCP
         static void Disconnect()
         {
             if (stream != null)
-                stream.Close();//отключение потока
+                stream.Close();//відкриття потокуа
             if (client != null)
-                client.Close();//отключение клиента
-            Environment.Exit(0); //завершение процесса
+                client.Close();//відключення клієнта
+            Environment.Exit(0); //завершення процнсу
         }
     }
 }
