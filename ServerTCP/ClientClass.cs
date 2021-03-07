@@ -10,7 +10,7 @@ namespace ServerTCP
         protected internal NetworkStream Stream { get; private set; }
         string userName;
         TcpClient client;
-        ServerClass server; // объект сервера
+        ServerClass server; //обєкт сервера
 
         public ClientClass(TcpClient tcpClient, ServerClass serverObject)
         {
@@ -25,15 +25,15 @@ namespace ServerTCP
             try
             {
                 Stream = client.GetStream();
-                // получаем имя пользователя
+                // отримуємо ім'я користувача
                 string message = GetMessage();
                 userName = message;
 
                 message = userName + " get in chat";
-                // посылаем сообщение о входе в чат всем подключенным пользователям
+                //посилаємо сповіщення про вхід в чат іншим користувачам
                 server.BroadcastMessage(message, this.Id);
                 Console.WriteLine(message);
-                // в бесконечном цикле получаем сообщения от клиента
+                //в безкінечному циклі получаємо сповіщення від користувача
                 while (true)
                 {
                     try
@@ -58,16 +58,16 @@ namespace ServerTCP
             }
             finally
             {
-                // в случае выхода из цикла закрываем ресурсы
+                // в випадку виходу із циклу закриваємо ресурси
                 server.RemoveConnection(this.Id);
                 Close();
             }
         }
 
-        // чтение входящего сообщения и преобразование в строку
+        // читання вхідного сповіщення і перетворення його в строку
         public string GetMessage()
         {
-            byte[] data = new byte[64]; // буфер для получаемых данных
+            byte[] data = new byte[64]; // буфер для отримання даних
             StringBuilder builder = new StringBuilder();
             int bytes = 0;
             do
@@ -80,7 +80,7 @@ namespace ServerTCP
             return builder.ToString();
         }
 
-        // закрытие подключения
+        // закриття підключення
         public void Close()
         {
             if (Stream != null)
