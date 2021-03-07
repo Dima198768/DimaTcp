@@ -11,7 +11,7 @@ namespace ServerTCP
     public class ServerClass
     {
         static TcpListener tcpListener; // сервер для прослуховування
-        List<ClientClass> clients = new List<ClientClass>(); // все подключения
+        List<ClientClass> clients = new List<ClientClass>(); // всі подключення
 
         public void AddConnection(ClientClass clientObject)
         {
@@ -19,13 +19,13 @@ namespace ServerTCP
         }
         public void RemoveConnection(string id)
         {
-            // получаем по id закрытое подключение
+            // получаеємо по id закрите  підключення
             ClientClass client = clients.FirstOrDefault(c => c.Id == id);
-            // и удаляем его из списка подключений
+            // і видаляємо його зі списку підключень
             if (client != null)
                 clients.Remove(client);
         }
-        // прослушивание входящих подключений
+        // прослуховування вхідних підключень
         public void Listen()
         {
             try
@@ -50,28 +50,28 @@ namespace ServerTCP
             }
         }
 
-        // трансляция сообщения подключенным клиентам
+        // трансляція повідомлення підключеним клієнтам
         public void BroadcastMessage(string message, string id)
         {
             byte[] data = Encoding.Unicode.GetBytes(message);
             for (int i = 0; i < clients.Count; i++)
             {
-                if (clients[i].Id != id) // если id клиента не равно id отправляющего
+                if (clients[i].Id != id) // якщо id клиієнта не дорівнює id відправляючого
                 {
-                    clients[i].Stream.Write(data, 0, data.Length); //передача данных
+                    clients[i].Stream.Write(data, 0, data.Length); //передача даних
                 }
             }
         }
-        // отключение всех клиентов
+        //відключення всіх клієнтів
         public void Disconnect()
         {
-            tcpListener.Stop(); //остановка сервера
+            tcpListener.Stop(); //зупинка сервера
 
             for (int i = 0; i < clients.Count; i++)
             {
-                clients[i].Close(); //отключение клиента
+                clients[i].Close(); //відключення клієнта
             }
-            Environment.Exit(0); //завершение процесса
+            Environment.Exit(0); //завершення процесу
         }
     }
 }
