@@ -10,7 +10,7 @@ namespace ServerTCP
 {
     public class ServerClass
     {
-        static TcpListener tcpListener; // сервер для прослушивания
+        static TcpListener tcpListener; // сервер для прослуховування
         List<ClientClass> clients = new List<ClientClass>(); // все подключения
 
         public void AddConnection(ClientClass clientObject)
